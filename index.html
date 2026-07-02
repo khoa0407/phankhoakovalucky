@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DPI CONFIG TECH 1.0</title>
+<title>DPI CONFIG TECH 2.0</title>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
@@ -2636,7 +2636,7 @@ async function lCheckKey(){
 
     lSetStatus(
       `✅ Key hợp lệ.<br>📅 Hạn dùng: <b>${expiryAt ? lFormatDateTime(expiryAt) : (durationMinutes > 0 ? "Đang đồng bộ hạn dùng" : "Vĩnh viễn")}</b><br>⏳ Còn lại: <b>${expiryAt ? lRemainingText(expiryAt) : (durationMinutes > 0 ? lDurationText(durationMinutes) : "Không giới hạn")}</b><br>📱 Thiết bị: <b>${registeredDevices.length}/${maxDevices}</b>` +
-      (already ? "<br>🔓 Thiết bị này đã được đăng ký." : ""),
+      (already ? "<br>🔓 Thiết bị này đã được đăng ký." : "<br>🔓 Bấm Kích hoạt thiết bị để đăng nhập bằng hạn còn lại của key."),
       "ok"
     );
   }catch(e){

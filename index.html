@@ -1776,23 +1776,23 @@ function makePreset(){
 
   // Máy mạnh giảm nhẹ để đỡ quá văng.
   if (isStrong) {
-    min -= 5;
-    max -= 5;
+    min += 5;
+    max += 10;
   }
 
   if (hz >= 90) {
     min += 5;
-    max += 8;
+    max += 9;
   }
 
   if (hz >= 120) {
     min += 5;
-    max += 10;
+    max += 8;
   }
 
   if (hz >= 144) {
     min += 5;
-    max += 10;
+    max += 7;
   }
 
   min = clamp(min, 100, 200);

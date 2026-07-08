@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://headlock-trongphuz.netlify.app/ -->
+<html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<style>
+  html, body { touch-action: manipulation; }
+  input, select, textarea { font-size:16px; }
+</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HEADLOCK</title>
+    <link rel="stylesheet" href="./HEADLOCK_files/theme.css">
+  <style>
+  #vgGate{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;background:rgba(8,10,15,.72);backdrop-filter:blur(6px)}
+  #vgGate .vg-panel{width:min(620px,92vw);border:1px solid #2a2d3f;border-radius:16px;overflow:hidden;color:#e8e7ff;
+    font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));box-shadow:0 24px 60px rgba(0,0,0,.55)}
+  #vgGate .vg-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid #2a2d3f}
+  #vgGate .vg-brand{font-weight:900;letter-spacing:.3px;white-space:nowrap}
+  #vgGate .vg-hd-rt{display:flex;gap:8px}
+  #vgGate .vg-btn{padding:9px 14px;border-radius:10px;border:1px solid #3a3f56;background:#191f2a;color:#e8e7ff;cursor:pointer}
+  #vgGate .vg-btn:hover{filter:brightness(1.08)}
+  #vgGate .vg-btn--pri{background:#1e293b;border-color:#405075}
+  #vgGate .vg-btn--ghost{background:#141924}
+  #vgGate .vg-bd{padding:16px}
+  #vgGate .vg-label{font-size:12px;color:#aab4d6;margin:0 0 6px 0}
+  #vgGate .vg-field{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+  #vgGate .vg-input{padding:11px 12px;border-radius:10px;border:1px solid #3a3f56;background:#0c1017;color:#e8e7ff;width:100%}
+  #vgGate .vg-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  #vgGate .vg-msg{margin-top:12px;padding:12px;border-radius:12px;border:1px solid #2a2d3f;background:#0b1118;font-size:13px;line-height:1.45}
+  #vgGate .vg-msg.ok{border-color:#2f9e44;background:#0d1a12;color:#b9ffd1}
+  #vgGate .vg-msg.warn{border-color:#b8860b;background:#1b1607;color:#ffe9b0}
+  #vgGate .vg-msg.err{border-color:#b02a37;background:#1a0f12;color:#ffd1d6}
+  #vgGate .vg-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;color:#9fb0d0;font-size:12px}
+  #vgGate details{margin-top:10px;border:1px dashed #2a2d3f;border-radius:12px;overflow:hidden}
+  #vgGate summary{padding:10px 12px;cursor:pointer;list-style:none;background:#0b0f15}
+  #vgGate summary::-webkit-details-marker{display:none}
+  #vgGate .vg-pre{margin:0;padding:12px 12px 14px;background:#0b0f15;color:#bcd;max-height:220px;overflow:auto}
+  #vgGate .vg-icon{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:10px;border:1px solid #3a3f56;background:#151a24;cursor:pointer}
+  #vgGate .vg-icon svg{width:16px;height:16px;display:block}
+  @media (max-width:520px){
+    #vgGate .vg-field{grid-template-columns:1fr}
+    #vgGate .vg-hd{flex-wrap:wrap}
+  }</style><style>.--savior-overlay-transform-reset {
+  transform: none !important;
+}
+.--savior-overlay-z-index-top {
+  z-index: 2147483643 !important;
+}
+.--savior-overlay-position-relative {
+  position: relative;
+}
+.--savior-overlay-position-static {
+  position: static !important;
+}
+.--savior-overlay-overflow-hidden {
+  overflow: hidden !important;
+}
+.--savior-overlay-overflow-x-visible {
+  overflow-x: visible !important;
+}
+.--savior-overlay-overflow-y-visible {
+  overflow-y: visible !important;
+}
+.--savior-overlay-z-index-reset {
+  z-index: auto !important;
+}
+.--savior-overlay-display-none {
+  display: none !important;
+}
+.--savior-overlay-clearfix {
+  clear: both;
+}
+.--savior-overlay-reset-filter {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+.--savior-tooltip-host {
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+}
+/*Override css styles for Twitch.tv*/
+main.--savior-overlay-z-index-reset {
+  z-index: auto !important;
+}
+.modal__backdrop.--savior-overlay-z-index-reset {
+  position: static !important;
+}
+main.--savior-overlay-z-index-top {
+  z-index: auto !important;
+}
+main.--savior-overlay-z-index-top .channel-root__player-container + div,
+main.--savior-overlay-z-index-top .video-player-hosting-ui__container + div {
+  opacity: 0.1;
+}
+/*Dirty hack for facebook big video page e.g: https://www.facebook.com/abc/videos/...*/
+.--savior-backdrop {
+  position: fixed !important;
+  z-index: 2147483642 !important;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw !important;
+  background-color: rgba(0,0,0,0.9);
+}
+.--savior-overlay-twitter-video-player {
+  position: fixed;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+}
+.--savior-overlay-z-index-reset [class*="DivSideNavContainer"],
+.--savior-overlay-z-index-reset [class*="DivHeaderContainer"],
+.--savior-overlay-z-index-reset [class*="DivBottomContainer"],
+.--savior-overlay-z-index-reset [class*="DivCategoryListWrapper"],
+.--savior-overlay-z-index-reset [data-testid="sidebarColumn"],
+.--savior-overlay-z-index-reset header[role="banner"],
+.--savior-overlay-z-index-reset [data-testid="cellInnerDiv"]:not(.--savior-overlay-z-index-reset),
+.--savior-overlay-z-index-reset [aria-label="Home timeline"]>div:first-child,
+.--savior-overlay-z-index-reset [aria-label="Home timeline"]>div:nth-child(3) {
+  z-index: -1 !important;
+}
+.--savior-overlay-z-index-reset [data-testid="cellInnerDiv"] .--savior-backdrop+div {
+  z-index: 2147483643 !important;
+}
+.--savior-overlay-z-index-reset [data-testid="primaryColumn"]>[aria-label="Home timeline"] {
+  z-index: 0 !important;
+}
+.--savior-overlay-z-index-reset#mtLayer,
+.--savior-overlay-z-index-reset.media-layer {
+  z-index: 3000 !important;
+}
+.--savior-overlay-position-relative [class*="SecBar_secBar_"],
+.--savior-overlay-position-relative .woo-box-flex [class*="Frame_top_"] {
+  z-index: 0 !important;
+}
+.--savior-overlay-position-relative .vue-recycle-scroller__item-view:not(.--savior-overlay-z-index-reset),
+.--savior-overlay-position-relative .woo-panel-main[class*="BackTop_main_"],
+.--savior-overlay-position-relative [class*="Main_side_"] {
+  z-index: -1 !important;
+}
+/* Fix conflict css with zingmp3 */
+.zm-video-modal.--savior-overlay-z-index-reset {
+  position: absolute;
+}
+/* Dirty hack for xvideos99 */
+#page #main.--savior-overlay-z-index-reset {
+  z-index: auto !important;
+}
+/* Overlay for ok.ru */
+#vp_w.--savior-overlay-z-index-reset.media-layer.media-layer__video {
+  overflow-y: hidden;
+  z-index: 2147483643 !important;
+}
+/* Fix missing controller for tv.naver.com */
+.--savior-overlay-z-index-top.rmc_controller,
+.--savior-overlay-z-index-top.rmc_setting_intro,
+.--savior-overlay-z-index-top.rmc_highlight,
+.--savior-overlay-z-index-top.rmc_control_settings {
+  z-index: 2147483644 !important;
+}
+/* Dirty hack for douyi.com */
+.swiper-wrapper.--savior-overlay-z-index-reset .swiper-slide:not(.swiper-slide-active),
+.swiper-wrapper.--savior-overlay-transform-reset .swiper-slide:not(.swiper-slide-active) {
+  display: none;
+}
+.videoWrap + div > div {
+  pointer-events: unset;
+}
+/* Dirty hack for fpt.ai */
+.mfp-wrap.--savior-overlay-z-index-top {
+  position: relative;
+}
+.mfp-wrap.--savior-overlay-z-index-top .mfp-close {
+  display: none;
+}
+.mfp-wrap.--savior-overlay-z-index-top .mfp-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+section.--savior-overlay-z-index-reset>main[role="main"].--savior-overlay-z-index-reset + nav {
+  z-index: -1 !important;
+}
+section.--savior-overlay-z-index-reset>main[role="main"].--savior-overlay-z-index-reset section.--savior-overlay-z-index-reset div.--savior-overlay-z-index-reset ~ div {
+  position: relative;
+}
+.watching-movie #video-player.--savior-overlay-z-index-top {
+  z-index: 2147483644 !important;
+}
+div[class^="tiktok"].--savior-overlay-z-index-reset {
+  z-index: 2147483644 !important;
+}
+.--savior-lightoff-fix section:not(:has([class*="--savior-overlay-"])),
+.--savior-lightoff-fix section.section_video ~ section {
+  z-index: -1;
+  position: relative;
+}
+.--savior-lightoff-fix header,
+.--savior-lightoff-fix footer,
+.--savior-lightoff-fix .top-header,
+.--savior-lightoff-fix .swiper-container,
+.--savior-lightoff-fix #to_top,
+.--savior-lightoff-fix #button-adblock {
+  z-index: -1 !important;
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+</style></head>
+  <body>
+    <div class="code-rain" aria-hidden="true">
+      <div class="code-layer" id="codeRain"><div class="code-column" style="--duration: 13.917880149318224s; --delay: -8.74685494750814s;"><div class="code-track">constexpr int MAX_LOCK = 3;<br>volatile bool active = false;<br>constexpr int MAX_LOCK = 3;<br>volatile bool active = false;</div></div><div class="code-column" style="--duration: 22.537140285679172s; --delay: -22.377279887613692s;"><div class="code-track">template<typename t=""><br>T smooth(T a, T b, float k){<br>  return a + (b - a) * k;<br>}<br>template<typename t=""><br>T smooth(T a, T b, float k){<br>  return a + (b - a) * k;<br>}</typename></typename></div></div><div class="code-column" style="--duration: 24.35283003454207s; --delay: -12.3091853833811s;"><div class="code-track">namespace ios {<br>  float aim = 0.45f;<br>  bool lock = true;<br>}<br>namespace ios {<br>  float aim = 0.45f;<br>  bool lock = true;<br>}</div></div><div class="code-column" style="--duration: 18.533770839320077s; --delay: -6.214988774290103s;"><div class="code-track">for(size_t i=0;i<nodes.size();++i){<br>  nodes[i].update();<br>}<br>for(size_t i=0;i<nodes.size();++i){<br>  nodes[i].update();<br>}</nodes.size();++i){<br></nodes.size();++i){<br></div></div><div class="code-column" style="--duration: 17.540336830652304s; --delay: -13.824402508034636s;"><div class="code-track">struct DriftFix {<br>  float spread; float decay;<br>};<br>DriftFix fix{1.2f, 0.04f};<br>struct DriftFix {<br>  float spread; float decay;<br>};<br>DriftFix fix{1.2f, 0.04f};</div></div><div class="code-column" style="--duration: 17.904479374467268s; --delay: -8.823008017949332s;"><div class="code-track">namespace ios {<br>  float aim = 0.45f;<br>  bool lock = true;<br>}<br>namespace ios {<br>  float aim = 0.45f;<br>  bool lock = true;<br>}</div></div><div class="code-column" style="--duration: 21.75518473864615s; --delay: -20.10010575118515s;"><div class="code-track">struct DriftFix {<br>  float spread; float decay;<br>};<br>DriftFix fix{1.2f, 0.04f};<br>struct DriftFix {<br>  float spread; float decay;<br>};<br>DriftFix fix{1.2f, 0.04f};</div></div><div class="code-column" style="--duration: 24.74465665472382s; --delay: -1.5825646465853458s;"><div class="code-track">namespace ios {<br>  float aim = 0.45f;<br>  bool lock = true;<br>}<br>namespace ios {<br>  float aim = 0.45f;<br>  bool lock = true;<br>}</div></div></div>
+    </div>
+    <div class="aim-crosshair" id="aimCrosshair" aria-hidden="true"></div>
+    <canvas class="aim-canvas" id="aimCanvas" aria-hidden="true"></canvas>
+    <div class="feather-cursor" id="featherCursor" aria-hidden="true"></div>
+    <div class="limit-overlay" id="limitOverlay" aria-hidden="true"></div>
+    <div class="limit-toast" id="limitToast" role="alert" aria-live="assertive">
+      <p>Giới hạn kích hoạt</p>
+      <span>Chỉ có thể bật tối đa 3 tính năng cùng lúc. Vui lòng tắt bớt một mục trước khi tiếp tục.</span>
+    </div>
+    <main class="screen">
+      <section class="ios-panel">
+        <header class="panel-header centered">
+<div class="top-menu">
+  <button class="menu-btn active" onclick="showHome()">Home</button>
+  <button class="menu-btn" onclick="showRegedit()">Function</button>
+</div>
+          <p class="panel-tag">PRIME OPTIMIZER</p>
+          <h1 class="panel-title">
+            <span class="title-line panel-line">HEADLOCK</span>
+            <span class="title-line fire-line">Free Fire</span>
+          </h1>
+<h1 class="home-title"></h1>
+    <h2 class="home-name"></h2>
+    <p class="home-welcome">CHÀO MỪNG BẠN ĐẾN<br>VỚI APP HEADLOCK</p>
+          <div class="panel-accent"></div>
+        </header>
+<div class="home-page" id="homePage" style="display: block;">
+<div class="admin-card">
+  <img src="./HEADLOCK_files/IMG-2427.jpg" class="admin-avatar">
+
+  <h4>Trọng Phuz</h4>
+  <p>Developer / Admin HEADLOCK</p>
+
+  <div class="admin-links">
+    <a href="https://www.facebook.com/share/1Bbqq5ZTcZ/?mibextid=wwXIfr" target="_blank">Facebook</a>
+    <a href="https://zalo.me/0949739542" target="_blank">Zalo</a>
+    <a href="https://www.tiktok.com/@trongphu.loveyou_supprot?_r=1&amp;_t=ZS-95KzbC1CmpA" target="_blank">Tiktok</a>
+  </div>
+</div>
+    <button class="start-panel-btn" onclick="showRegedit()">
+  START MENU HEADLOCK  
+</button>
+
+  </div>
+
+        <div class="panel-placeholder" id="regeditPage" style="display: none;">
+          <div class="feature-grid" id="featureGrid">
+            <article class="toggle-card compact" data-feature="aimlock">
+              <div class="feature-row">
+                <p class="feature-title">𝗔𝗜𝗠𝗟𝗢𝗖𝗞</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Khóa tâm bám đầu</p>
+            </article>
+            <article class="toggle-card compact" data-feature="nheTam">
+              <div class="feature-row">
+                <p class="feature-title">𝗙𝗔𝗧𝗛𝗘𝗥 𝗔𝗜𝗠</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Nhẹ Tâm</p>
+            </article>
+            <article class="toggle-card compact" data-feature="nhay">
+              <div class="feature-row">
+                <p class="feature-title">𝗦𝗘𝗡𝗦𝗜𝗩𝗜𝗧𝗬</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Nhạy Màn</p>
+            </article>
+            <article class="toggle-card compact" data-feature="damTam">
+              <div class="feature-row">
+                <p class="feature-title">𝗦𝗧𝗔𝗗𝗬 𝗛𝗢𝗟𝗗</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Đầm Tâm</p>
+            </article>
+            <article class="toggle-card compact" data-feature="ghimTam">
+              <div class="feature-row">
+                <p class="feature-title">𝗔𝗡𝗖𝗛𝗢𝗥 𝗔𝗜𝗠</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Ghìm Tâm</p>
+            </article>
+            <article class="toggle-card compact" data-feature="fixRung">
+              <div class="feature-row">
+                <p class="feature-title">𝗦𝗛𝗔𝗞𝗘 𝗙𝗜𝗫</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Fix Rung Tâm</p>
+            </article>
+            <article class="toggle-card compact" data-feature="fixLacDan">
+              <div class="feature-row">
+                <p class="feature-title">𝗗𝗥𝗜𝗙𝗧 𝗙𝗜𝗫</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Fix Lạc Đạn</p>
+            </article>
+            <article class="toggle-card compact" data-feature="fixLoDau">
+              <div class="feature-row">
+                <p class="feature-title">𝗛𝗘𝗔𝗗 𝗙𝗜𝗫</p>
+                <div class="status-toggle">
+                  <span class="status-pill off" aria-label="Trạng thái: tắt">Off</span>
+                  <button type="button" class="aimlock-switch" aria-pressed="false">
+                    <span class="thumb"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="feature-desc"><span class="desc-icon">✓</span>Fix Lố Đầu</p>
+            </article>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p class="site-footer-copy">© 2026 Bản quyền TRỌNG PHUZ </p>
+        </footer>
+</section>
+    </main>
+    <script src="./HEADLOCK_files/app-long-protected.js.tải xuống"></script>
+    <script>
+      (() => {
+        const payload =
+          "KCgpID0+IHsKICBjb25zdCBpc0Jsb2NrZWRDb21ibyA9IChldmVudCkgPT4gewogICAgY29uc3Qga2V5ID0gKGV2ZW50LmtleSB8fCAiIikudG9VcHBlckNhc2UoKTsKICAgIGlmIChrZXkgPT09ICJGMTIiKSByZXR1cm4gdHJ1ZTsKICAgIGlmIChldmVudC5jdHJsS2V5ICYmIGV2ZW50LnNoaWZ0S2V5ICYmIFsiSSIsICJKIiwgIkMiXS5pbmNsdWRlcyhrZXkpKSByZXR1cm4gdHJ1ZTsKICAgIGlmIChldmVudC5jdHJsS2V5ICYmICFldmVudC5zaGlmdEtleSAmJiBrZXkgPT09ICJVIikgcmV0dXJuIHRydWU7CiAgICByZXR1cm4gZmFsc2U7CiAgfTsKCiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImNvbnRleHRtZW51IiwgKGV2ZW50KSA9PiB7CiAgICBldmVudC5wcmV2ZW50RGVmYXVsdCgpOwogIH0pOwoKICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigKICAgICJrZXlkb3duIiwKICAgIChldmVudCkgPT4gewogICAgICBpZiAoaXNCbG9ja2VkQ29tYm8oZXZlbnQpKSB7CiAgICAgICAgZXZlbnQucHJldmVudERlZmF1bHQoKTsKICAgICAgICBldmVudC5zdG9wUHJvcGFnYXRpb24oKTsKICAgICAgICByZXR1cm4gZmFsc2U7CiAgICAgIH0KICAgIH0sCiAgICB7IGNhcHR1cmU6IHRydWUgfQogICk7Cn0pKCk7";
+        const decode =
+          typeof atob === "function"
+            ? atob
+            : (str) => Buffer.from(str, "base64").toString("utf8");
+        Function(decode(payload))();
+      })();
+    </script>
+    <script>
+      (function () {
+         const blockGesture = (e) => e.preventDefault();
+        ["gesturestart", "gesturechange"].forEach((ev) =>
+          document.addEventListener(ev, blockGesture, { passive: false })
+        );
+         window.addEventListener("wheel", (e) => {
+          if (e.ctrlKey) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+
+        function loadScript(src, onDone) {
+          var s = document.createElement("script");
+          s.src = src;
+          s.async = false;
+          s.onload = function () {
+            if (typeof onDone === "function") onDone();
+          };
+          s.onerror = function () {
+            console.error("Không tải được script:", src);
+            if (typeof onDone === "function") onDone();
+          };
+          document.body.appendChild(s);
+        }
+
+        var loaderSrc = "./code/app-long-protected.js";
+
+        loadScript(loaderSrc, function () {
+          loadScript("./ketgate.js");
+        });
+      })();
+    </script><script src="./HEADLOCK_files/app-long-protected(1).js.tải xuống"></script>
+    <script>
+      (function () {
+         var connection =
+          navigator.connection ||
+          navigator.mozConnection ||
+          navigator.webkitConnection ||
+          null;
+
+        var warmStarted = false;
+        var toggleLocks = new Set();
+
+        function warmConnection() {
+          if (warmStarted) return;
+          warmStarted = true;
+           fetch("./code/app-long-protected.js?warm=" + Date.now(), {
+            cache: "no-store",
+            keepalive: true,
+            mode: "no-cors",
+          }).catch(function () {
+            warmStarted = false;
+          });
+        }
+
+        function isHighThroughput() {
+          if (!connection) return true;
+          if (/wifi|ethernet/gi.test(String(connection.type))) return true;
+          if (/5g/gi.test(String(connection.type))) return true;
+          if (connection.effectiveType && /4g|5g/gi.test(connection.effectiveType))
+            return true;
+          return connection.downlink && connection.downlink >= 10;
+        }
+
+        function smoothToggle(btn) {
+          var feature = btn.closest(".toggle-card");
+          var name = feature ? feature.dataset.feature || "unknown" : "unknown";
+          if (toggleLocks.has(name)) return;
+          toggleLocks.add(name);
+           requestAnimationFrame(function () {
+            warmConnection();
+            setTimeout(function () {
+              toggleLocks.delete(name);
+            }, 320);
+          });
+        }
+
+         document.querySelectorAll(".toggle-card .aimlock-switch").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            smoothToggle(btn);
+          });
+        });
+
+        if (connection && typeof connection.addEventListener === "function") {
+          connection.addEventListener("change", function () {
+            if (isHighThroughput()) {
+              warmConnection();
+            }
+          });
+        } else {
+           warmConnection();
+        }
+      })();
+    </script>
+<script>
+  const homePage = document.getElementById("homePage");
+  const regeditPage = document.getElementById("regeditPage");
+  const menuBtns = document.querySelectorAll(".menu-btn");
+
+  function setActive(index) {
+    menuBtns.forEach((b,i) => {
+      b.classList.toggle("active", i === index);
+    });
+  }
+
+  function showHome() {
+    homePage.style.display = "block";
+    regeditPage.style.display = "none";
+    setActive(0);
+  }
+
+  function showRegedit() {
+    homePage.style.display = "none";
+    regeditPage.style.display = "block";
+    setActive(1);
+  }
+
+  // Mặc định vào HOME
+  showHome();
+</script>
+<script>
+function toggleGroup() {
+  const box = document.getElementById("groupBox");
+  if (box.style.display === "none" || box.style.display === "") {
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+}
+</script>
+  
+
+<script src="./HEADLOCK_files/ketgate.js.tải xuống"></script><div id="vgGate" style="display: grid;">
+      <div class="vg-panel">
+        <div class="vg-hd">
+          <div class="vg-brand">TRỌNG PHUZ API SERVER KEY</div>
+          <div class="vg-hd-rt">
+            <button class="vg-btn vg-btn--ghost" id="vgReset" title="Nhập lại">Nhập lại</button>
+          </div>
+        </div>
+
+        <div class="vg-bd">
+          <div>
+            <div class="vg-label">Mã Kích Hoạt</div>
+            <div class="vg-field">
+              <input id="vgKey" class="vg-input" type="text" placeholder="DÁN KEY-XXXX-XXXX-XXXX" autocomplete="one-time-code" inputmode="latin">
+              <button class="vg-icon" id="vgPasteKey" title="Dán">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8v4h4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4h4Z" stroke="currentColor" stroke-width="1.6"></path><path d="M9 2h6v3a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V2Z" stroke="currentColor" stroke-width="1.6"></path></svg>
+                <span>Dán</span>
+              </button>
+              <button class="vg-icon" id="vgDelKey" title="Delete">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6"></path><path d="M10 11v7M14 11v7" stroke="currentColor" stroke-width="1.6"></path></svg>
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="vg-label">Mã Thiết Bị</div>
+            <div class="vg-field">
+              <input id="vgDev" class="vg-input" type="text" readonly="">
+              <button class="vg-icon" id="vgCopyDev" title="Sao chép">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M9 9h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6"></path><path d="M7 15H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.6"></path></svg>
+                <span>Sao chép</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="vg-actions">
+            <button class="vg-btn vg-btn--pri" id="vgCheck">Kiểm tra</button>
+            <button class="vg-btn vg-btn--pri" id="vgActive">Kích hoạt (1 thiết bị)</button>
+          </div>
+
+          <div class="vg-msg ok" id="vgMsg">Đã dán vào Mã Kích Hoạt.</div>
+          <details id="vgDtl" hidden="">
+            <summary>Chi tiết kỹ thuật</summary>
+            <pre class="vg-pre" id="vgRaw"></pre>
+          </details>
+
+          <div class="vg-foot">
+            <span id="vgSta">Chưa kích hoạt</span>
+            <button class="vg-btn vg-btn--ghost" id="vgContact" title="Liên hệ">Liên hệ mua key</button>
+          </div>
+        </div>
+      </div></div></body><savior-host style="all: unset; position: absolute; top: 0; left: 0; z-index: 99999999999999; display: block !important; overflow: unset"><template shadowrootmode="open"><style>@import "chrome-extension://jdfkmiabjpfjacifcmihfdjhpnjpiick/css/content-script.css";
+</style><div class="body"><div class="turn-lights-overlay"></div><toasts id="toasts-container"></toasts></div></template></savior-host></html>

@@ -1,5 +1,5 @@
 (function(){
-  // ====== CẤU HÌNH - dùng API của BẠN (Key.js) ======
+  // ====== CẤU HÌNH - dùng API của BẠN (Key.js), không đụng API của người khác ======
   const API_BASE = 'https://winter-water-2873phankhoaapi.phananhkhoa04072007.workers.dev';
   const BRAND_TITLE = 'KOVALUCKY';
   const TZ = 'Asia/Ho_Chi_Minh';
@@ -15,26 +15,26 @@
   const fmt = (ts)=> ts==null ? 'lifetime' :
     new Intl.DateTimeFormat('vi-VN',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(ts);
 
-  // ====== GỌI API CỦA BẠN ======
+  // ====== GỌI API CỦA BẠN (Đã thêm isAutoLoad để nhận biết khi tự động tải trang) ======
   async function verifyKey(key){
     try{
       const res = await fetch(API_BASE + '/api/verify', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ key, deviceId }) // Truyền thêm deviceId để backend biết thiết bị nào đang kiểm tra
+        body: JSON.stringify({ key })
       });
       return await res.json().catch(()=>({ok:false, error:'PARSE_ERROR'}));
     }catch(e){
       return { ok:false, error:'NETWORK_ERROR', detail: String(e && e.message || e) };
     }
   }
-
-  async function activateKey(key, deviceId){
+  
+  async function activateKey(key, deviceId, isAutoLoad = false){
     try{
       const res = await fetch(API_BASE + '/api/activate', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ license_key: key, deviceId })
+        body: JSON.stringify({ license_key: key, deviceId, isAutoLoad })
       });
       return await res.json().catch(()=>({ok:false, error:'PARSE_ERROR'}));
     }catch(e){
@@ -174,17 +174,14 @@
     if(raw){ dtl.hidden=false; pre.textContent = typeof raw==='string'?raw:JSON.stringify(raw,null,2); }
     else { dtl.hidden=true; pre.textContent=''; }
   }
-  
   function updateStatus(data){
     const el = document.querySelector('#vgSta'); if(!el) return;
     if(!data){ el.textContent = 'Chưa kích hoạt'; return; }
-    // Đồng bộ với dữ liệu trả về mới từ backend
     const devInfo = (data.maxDevices!=null)
       ? ` | Thiết bị: ${data.usedDevices!=null ? data.usedDevices : '?'}/${data.maxDevices}`
       : '';
     el.textContent = `Hết hạn: ${fmt(data.expiresAt)}${devInfo}`;
   }
-  
   function copyToClipboard(text, okText){ navigator.clipboard?.writeText(text).then(()=> setMsg('ok', okText) ); }
 
   async function pasteIntoKey(){
@@ -209,7 +206,6 @@
     setMsg('ok','Đã xóa License Key khỏi thiết bị này.');
   }
 
-  // ====== Xử lý bấm nút ======
   async function onCheck(){
     const key = document.querySelector('#vgKey').value.trim();
     if(!key) return setMsg('warn','Vui lòng nhập License Key.');
@@ -232,7 +228,8 @@
     const key = document.querySelector('#vgKey').value.trim();
     if(!key) return setMsg('warn','Vui lòng nhập License Key.');
     setMsg('', 'Đang kích hoạt...');
-    const j = await activateKey(key, deviceId);
+    // Khi người dùng bấm nút Kích hoạt chủ động: isAutoLoad = false
+    const j = await activateKey(key, deviceId, false);
     if(j.ok){
       localStorage.setItem(LS.KEY,key);
       const d = j.data || j;
@@ -244,7 +241,7 @@
       const why=(j.error||'').toUpperCase();
       const map={
         BOUND_TO_ANOTHER_DEVICE:'Key đã gắn với thiết bị khác.',
-        DEVICE_LIMIT:'Key đã đạt giới hạn thiết bị tối đa cho phép.',
+        DEVICE_LIMIT:'Key đã đủ số thiết bị tối đa cho phép.',
         DEVICE_ID_REQUIRED:'Thiếu Device ID.',
         EXPIRED:'Key đã hết hạn.',
         REVOKED:'Key đã bị thu hồi.',
@@ -270,13 +267,33 @@
         return;
       }
       
-      // Sử dụng activateKey khi tải trang để tự kích hoạt lại nếu key bị Admin Reset 
-      const a = await activateKey(savedKey, deviceId);
+      // GỌI KÍCH HOẠT VỚI CỜ isAutoLoad = true
+      const a = await activateKey(savedKey, deviceId, true);
+      
       if(!a.ok){
+        // NẾU BỊ SERVER TỪ CHỐI (vừa bị reset / unused), XÓA LOCALSTORAGE NGAY
+        if(a.error === 'KEY_RESET_REQUIRE_MANUAL_ACTIVATE' || a.error === 'NOT_FOUND') {
+          localStorage.removeItem(LS.KEY);
+          const inp = $('#vgKey');
+          if(inp) inp.value = '';
+        }
+        
         show();
+        
+        const why = (a.error || '').toUpperCase();
+        const map = {
+          KEY_RESET_REQUIRE_MANUAL_ACTIVATE: 'Key của bạn vừa được Reset trên hệ thống. Vui lòng bấm kích hoạt lại.',
+          BOUND_TO_ANOTHER_DEVICE: 'Thiết bị của bạn đã bị gỡ liên kết trên hệ thống.',
+          DEVICE_LIMIT: 'Key đã đạt giới hạn thiết bị tối đa.',
+          EXPIRED: 'Thời hạn sử dụng Key đã kết thúc.',
+          REVOKED: 'Key đã bị vô hiệu hóa bởi Admin.'
+        };
+        
+        setMsg('warn', map[why] || 'License Key không khả dụng hoặc đã bị thay đổi.', a);
         window.dispatchEvent(new CustomEvent('kovalucky-license-change',{detail:{state:'invalid', data:a}}));
         return;
       }
+      
       const d = a.data || a;
       updateStatus(d);
       window.dispatchEvent(new CustomEvent('kovalucky-license-change',{detail:{state:'valid', data:d}}));

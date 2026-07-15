@@ -1,5 +1,5 @@
 (function(){
-  // ====== CẤU HÌNH - dùng API của BẠN (Key.js), không đụng API của người khác ======
+  // ====== CẤU HÌNH - dùng API của BẠN (Key.js) ======
   const API_BASE = 'https://winter-water-2873phankhoaapi.phananhkhoa04072007.workers.dev';
   const BRAND_TITLE = 'KOVALUCKY';
   const TZ = 'Asia/Ho_Chi_Minh';
@@ -15,19 +15,20 @@
   const fmt = (ts)=> ts==null ? 'lifetime' :
     new Intl.DateTimeFormat('vi-VN',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(ts);
 
-  // ====== GỌI API CỦA BẠN (giữ nguyên đúng route + field như Key.js gốc) ======
+  // ====== GỌI API CỦA BẠN ======
   async function verifyKey(key){
     try{
       const res = await fetch(API_BASE + '/api/verify', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ key })
+        body: JSON.stringify({ key, deviceId }) // Truyền thêm deviceId để backend biết thiết bị nào đang kiểm tra
       });
       return await res.json().catch(()=>({ok:false, error:'PARSE_ERROR'}));
     }catch(e){
       return { ok:false, error:'NETWORK_ERROR', detail: String(e && e.message || e) };
     }
   }
+
   async function activateKey(key, deviceId){
     try{
       const res = await fetch(API_BASE + '/api/activate', {
@@ -159,7 +160,6 @@
       localStorage.removeItem(LS.KEY);
       updateStatus(null);
       show();
-      // Báo cho app phía sau biết license đã bị xóa để app tự đăng xuất/khóa lại
       window.dispatchEvent(new CustomEvent('kovalucky-license-change',{detail:{state:'none'}}));
     };
     $('#vgCheck').onclick    = onCheck;
@@ -174,14 +174,17 @@
     if(raw){ dtl.hidden=false; pre.textContent = typeof raw==='string'?raw:JSON.stringify(raw,null,2); }
     else { dtl.hidden=true; pre.textContent=''; }
   }
+  
   function updateStatus(data){
     const el = document.querySelector('#vgSta'); if(!el) return;
     if(!data){ el.textContent = 'Chưa kích hoạt'; return; }
+    // Đồng bộ với dữ liệu trả về mới từ backend
     const devInfo = (data.maxDevices!=null)
       ? ` | Thiết bị: ${data.usedDevices!=null ? data.usedDevices : '?'}/${data.maxDevices}`
       : '';
     el.textContent = `Hết hạn: ${fmt(data.expiresAt)}${devInfo}`;
   }
+  
   function copyToClipboard(text, okText){ navigator.clipboard?.writeText(text).then(()=> setMsg('ok', okText) ); }
 
   async function pasteIntoKey(){
@@ -206,7 +209,7 @@
     setMsg('ok','Đã xóa License Key khỏi thiết bị này.');
   }
 
-  // ====== Xử lý bấm nút, gọi đúng API/field của Key.js ======
+  // ====== Xử lý bấm nút ======
   async function onCheck(){
     const key = document.querySelector('#vgKey').value.trim();
     if(!key) return setMsg('warn','Vui lòng nhập License Key.');
@@ -241,7 +244,7 @@
       const why=(j.error||'').toUpperCase();
       const map={
         BOUND_TO_ANOTHER_DEVICE:'Key đã gắn với thiết bị khác.',
-        DEVICE_LIMIT:'Key đã đủ số thiết bị tối đa cho phép.',
+        DEVICE_LIMIT:'Key đã đạt giới hạn thiết bị tối đa cho phép.',
         DEVICE_ID_REQUIRED:'Thiếu Device ID.',
         EXPIRED:'Key đã hết hạn.',
         REVOKED:'Key đã bị thu hồi.',
@@ -266,10 +269,8 @@
         window.dispatchEvent(new CustomEvent('kovalucky-license-change',{detail:{state:'none'}}));
         return;
       }
-      // Dùng activate (không dùng verify) để server tự kiểm tra đúng slot của
-      // THIẾT BỊ NÀY theo max_activations. activate là idempotent: nếu thiết bị
-      // đã từng bind thì không tốn thêm slot, chỉ thiết bị mới mới bị chặn khi
-      // đã đủ số lượng (vd 100/100 thì máy thứ 101 sẽ nhận lỗi DEVICE_LIMIT).
+      
+      // Sử dụng activateKey khi tải trang để tự kích hoạt lại nếu key bị Admin Reset 
       const a = await activateKey(savedKey, deviceId);
       if(!a.ok){
         show();
